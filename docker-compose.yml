@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  api:
+    build: ./api
+    ports:
+      - "3001:3001"
+    environment:
+      - MONGODB_URI=mongodb+srv://damian98:pulpoline@cluster0.rgujnez.mongodb.net/
+      - JWT_SECRET=jwtprojectkey
+      - WEATHER_API_KEY=f23698f1aaa44373920221407250805
+      - PORT=3001
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - ENABLE_CACHE=true
+    depends_on:
+      - redis
+
+  client:
+    build: ./client
+    ports:
+      - "3007:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:3001
+    depends_on:
+      - api
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+volumes:
+  redis_data:

@@ -23,6 +23,7 @@
   "username": "Usuario",
   "password": "Contraseña",
   "sign_in_button": "Iniciar sesión",
+  "signing_in": "Iniciando sesión",
   "no_weather_data": "Sin datos de clima aún",
   "search_to_see_weather": "Busca una ciudad para ver el clima",
   "city": "Ciudad",

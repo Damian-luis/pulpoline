@@ -23,6 +23,7 @@
   "username": "Username",
   "password": "Password",
   "sign_in_button": "Sign in",
+  "signing_in": "Signing in",
   "no_weather_data": "No weather data yet",
   "search_to_see_weather": "Search for a city to see the weather",
   "city": "City",

@@ -13,7 +13,7 @@ export const useFavorites = () => {
       const data = await api.getFavorites();
       setFavorites(data);
     } catch {
-      toast.error('Failed to fetch favorites');
+      toast.error('Error al obtener las ciudades favoritas');
     } finally {
       setLoading(false);
     }
@@ -23,9 +23,9 @@ export const useFavorites = () => {
     try {
       const newFavorite = await api.addFavorite(city);
       setFavorites(prev => [...prev, newFavorite]);
-      toast.success('City added to favorites');
+      toast.success('Ciudad agregada a favoritos');
     } catch {
-      toast.error('Failed to add favorite');
+      toast.error('Error al agregar a favoritos');
     }
   }, []);
 
@@ -33,9 +33,9 @@ export const useFavorites = () => {
     try {
       await api.removeFavorite(city);
       setFavorites(prev => prev.filter(fav => fav.city !== city));
-      toast.success('City removed from favorites');
+      toast.success('Ciudad eliminada de favoritos');
     } catch {
-      toast.error('Failed to remove favorite');
+      toast.error('Error al eliminar de favoritos');
     }
   }, []);
 

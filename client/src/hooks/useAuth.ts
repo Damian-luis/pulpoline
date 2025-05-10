@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 export const useAuth = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isServerLoading, setIsServerLoading] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -17,15 +18,35 @@ export const useAuth = () => {
   }, []);
 
   const login = useCallback(async (username: string, password: string) => {
+    setIsServerLoading(true);
+    let timeoutId: NodeJS.Timeout | null = null;
     try {
+      timeoutId = setTimeout(() => {
+        toast.error('El servidor se encuentra cargando, esto podría tomar 1 minuto...', {
+          duration: 5000,
+          position: 'top-center',
+        });
+      }, 5000); 
+
       const { token } = await apiLogin(username, password);
+
+      if (timeoutId) clearTimeout(timeoutId);
+
       localStorage.setItem('token', token);
       setIsAuthenticated(true);
-      toast.success('Login successful');
-      router.push('/');
+      toast.success('Login exitoso');
+      router.push('/home');
     } catch (error) {
-      toast.error('Invalid credentials');
+      if (timeoutId) clearTimeout(timeoutId);
+      setIsServerLoading(false);
+      if (error instanceof Error && error.message.includes('timeout')) {
+        toast.error('El servidor se encuentra cargando, intenta nuevamente en unos segundos');
+      } else {
+        toast.error('Credenciales inválidas');
+      }
       throw error;
+    } finally {
+      setIsServerLoading(false);
     }
   }, [router]);
 
@@ -38,6 +59,7 @@ export const useAuth = () => {
   return {
     isAuthenticated,
     isLoading,
+    isServerLoading,
     login,
     logout,
   };

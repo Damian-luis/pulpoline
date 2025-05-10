@@ -22,8 +22,8 @@ export const useWeather = () => {
       ].slice(0, 5);
       localStorage.setItem('weatherHistory', JSON.stringify(newHistory));
     } catch {
-      setError('Failed to fetch weather data');
-      toast.error('Failed to fetch weather data');
+      setError('Error al obtener los datos del clima');
+      toast.error('Error al obtener los datos del clima');
     } finally {
       setLoading(false);
     }
@@ -38,7 +38,7 @@ export const useWeather = () => {
       const data = await api.getCitySuggestions(query);
       setSuggestions(data);
     } catch {
-      toast.error('Failed to fetch city suggestions');
+      toast.error('Error al obtener las sugerencias de ciudades');
     }
   }, []);
 

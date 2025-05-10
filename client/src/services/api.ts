@@ -1,10 +1,12 @@
 import axios from 'axios';
 import { WeatherData, CitySuggestion, FavoriteCity } from '../types/weather';
 
-const baseURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+// Solo la raíz, sin slash final
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
 
-export const api = axios.create({
-  baseURL,
+const api = axios.create({
+  baseURL: API_URL,
+  timeout: 120000, 
   headers: {
     'Content-Type': 'application/json',
   },
@@ -18,6 +20,16 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.code === 'ECONNABORTED' || error.message.includes('timeout')) {
+      error.message = 'Server timeout - server might be waking up';
+    }
+    return Promise.reject(error);
+  }
+);
+
 export const login = async (username: string, password: string) => {
   const response = await api.post('/auth/login', { username, password });
   const { access_token } = response.data;
@@ -25,12 +37,13 @@ export const login = async (username: string, password: string) => {
 };
 
 export const getWeather = async (city: string): Promise<WeatherData> => {
+  // SOLO el path relativo, NO la URL completa ni nada raro
   const response = await api.get(`/weather?city=${encodeURIComponent(city)}`);
   return response.data;
 };
 
 export const getCitySuggestions = async (query: string): Promise<CitySuggestion[]> => {
-  const response = await api.get(`/weather/autocomplete?query=${query}`);
+  const response = await api.get(`/weather/suggestions?q=${query}`);
   return response.data;
 };
 

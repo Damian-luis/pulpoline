@@ -1,11 +1,11 @@
-
-
-  {
+ {
     "redirects": [
       {
-        "source": "/login",
-        "destination": "/",
-        "permanent": true
+        "source": "/(.*)",
+        "has": [{ "type": "host", "value": "pulpoline-h6vu-cdolxsq7e-damianluis-projects.vercel.app" }],
+        "destination": "https://pulpoline-h6vu.vercel.app/$1",
+        "permanent": false
       }
     ]
   }
+  

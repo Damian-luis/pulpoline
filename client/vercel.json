@@ -1,0 +1,10 @@
+{
+    "version": 2,
+    "redirects": [
+      {
+        "source": "https://pulpoline-h6vu-cdolxsq7e-damianluis-projects.vercel.app/",
+        "destination": "https://pulpoline-h6vu.vercel.app/",
+        "permanent": true
+      }
+    ]
+  }

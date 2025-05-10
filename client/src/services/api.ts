@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { WeatherData, CitySuggestion, FavoriteCity } from '../types/weather';
 
-// Solo la raíz, sin slash final
+
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
 
 const api = axios.create({

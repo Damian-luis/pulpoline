@@ -34,6 +34,7 @@ Levantar el proyecto con Docker
 1_ Tener docker instalado y corriendo
 2_ Clonar el repositorio y asegurarse de que la carpeta api y client se encuentren en un directorio hijo archivo docker compose de la siguiente manera
 
+```text
 .
 ├── api/                
 │   ├── src/
